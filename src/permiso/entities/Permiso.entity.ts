@@ -1,3 +1,7 @@
+import { Empleado } from "src/empleado/entities/Empleado.entity";
+import { SesionTrabajo } from "src/sesion-trabajo/entities/sesion-trabajo.entity";
+import { TipoPermiso } from "src/tipopermiso/entities/TipoPermiso.entity";
+import { Usuario } from "src/usuario/entities/Usuario.entity";
 import {
   Column,
   Entity,
@@ -6,10 +10,6 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { TipoPermiso } from "src/tipopermiso/entities/TipoPermiso.entity";
-import { Empleado } from "src/empleado/entities/Empleado.entity";
-import { Usuario } from "src/usuario/entities/Usuario.entity";
-import { SesionTrabajo } from "src/sesion-trabajo/entities/sesion-trabajo.entity";
 
 @Index("id_empleado", ["idEmpleado"], {})
 @Index("id_usuario_aprobacion", ["idUsuarioAprobacion"], {})

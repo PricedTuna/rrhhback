@@ -29,6 +29,25 @@ export class PermisoService {
     return permiso;
   }
 
+  async findBySesionTrabajo(idSesionTrabajo: number): Promise<Permiso[]> {
+    return this.permisoRepository.find({
+      where: { idSesionTrabajo },
+    });
+  }
+
+  async findByEmpleado(idEmpleado: number): Promise<Permiso[]> {
+    return this.permisoRepository.find({
+      where: { idEmpleado },
+    });
+  }
+
+  async aprobarPermiso(id: number, idUsuarioAprobacion: number): Promise<Permiso> {
+    const permiso = await this.findOne(id);
+    permiso.aprobado = '1';  // Asumiendo que '1' representa aprobado
+    permiso.idUsuarioAprobacion = idUsuarioAprobacion;
+    return this.permisoRepository.save(permiso);
+  }
+
   async update(id: number, updatePermisoDto: UpdatePermisoDto): Promise<Permiso> {
     const permiso = await this.findOne(id);
     Object.assign(permiso, updatePermisoDto);
