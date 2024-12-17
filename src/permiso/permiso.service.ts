@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { CreatePermisoDto } from './dto/create-permiso.dto';
 import { UpdatePermisoDto } from './dto/update-permiso.dto';
 import { Permiso } from './entities/Permiso.entity';
+import { AprobarPermisoDto } from './dto/aprobar-permiso.dto';
 
 @Injectable()
 export class PermisoService {
@@ -41,10 +42,10 @@ export class PermisoService {
     });
   }
 
-  async aprobarPermiso(id: number, idUsuarioAprobacion: number): Promise<Permiso> {
+  async aprobarPermiso(id: number, aprobarPermiso: AprobarPermisoDto): Promise<Permiso> {
     const permiso = await this.findOne(id);
-    permiso.aprobado = '1';  // Asumiendo que '1' representa aprobado
-    permiso.idUsuarioAprobacion = idUsuarioAprobacion;
+    permiso.aprobado = true;
+    permiso.idUsuarioAprobacion = aprobarPermiso.idUsuarioAprobacion;
     return this.permisoRepository.save(permiso);
   }
 

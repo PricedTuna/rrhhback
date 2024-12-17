@@ -16,7 +16,7 @@ export class CreatePermisoDto {
   
   @ApiProperty()
   @IsString()
-  aprobado: string;
+  aprobado: boolean;
   
   @ApiProperty()
   @IsNumber()

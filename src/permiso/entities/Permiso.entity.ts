@@ -28,13 +28,13 @@ export class Permiso {
   @Column("varchar", { name: "descripcion", nullable: true, length: 50 })
   descripcion: string | null;
 
-  @Column("bool", { name: "aprobado" })
-  aprobado: string;
+  @Column("bool", { name: "aprobado", nullable: true, default: false })
+  aprobado: boolean;
 
   @Column("int", { name: "id_sesion_trabajo", nullable: true })
   idSesionTrabajo: number | null;
 
-  @Column("int", { name: "id_usuario_aprobacion" })
+  @Column("int", { name: "id_usuario_aprobacion", nullable: true })
   idUsuarioAprobacion: number;
 
   @Column("char", { name: "estatus", length: 2 })
