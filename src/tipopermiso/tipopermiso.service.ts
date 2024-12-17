@@ -12,23 +12,25 @@ export class TipopermisoService {
     private readonly tipoPermisoRepository: Repository<TipoPermiso>,
   ) {}
 
-  create(createTipopermisoDto: CreateTipopermisoDto) {
-    return 'This action adds a new tipopermiso';
+  async create(createTipopermisoDto: CreateTipopermisoDto): Promise<TipoPermiso> {
+    const newTipoPermiso = this.tipoPermisoRepository.create(createTipopermisoDto);
+    return await this.tipoPermisoRepository.save(newTipoPermiso);
   }
 
-  findAll() {
-    return `This action returns all tipopermiso`;
+  async findAll(): Promise<TipoPermiso[]> {
+    return await this.tipoPermisoRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} tipopermiso`;
+  async findOne(id: number): Promise<TipoPermiso> {
+    return await this.tipoPermisoRepository.findOne({ where: { idTipoPermiso: id } });
   }
 
-  update(id: number, updateTipopermisoDto: UpdateTipopermisoDto) {
-    return `This action updates a #${id} tipopermiso`;
+  async update(id: number, updateTipopermisoDto: UpdateTipopermisoDto): Promise<TipoPermiso> {
+    await this.tipoPermisoRepository.update(id, updateTipopermisoDto);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} tipopermiso`;
+  async remove(id: number): Promise<void> {
+    await this.tipoPermisoRepository.delete(id);
   }
 }

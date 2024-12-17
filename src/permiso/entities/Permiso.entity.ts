@@ -6,11 +6,13 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { TipoPermiso } from 'src/tipopermiso/entities/TipoPermiso.entity';
-import { Empleado } from 'src/empleado/entities/Empleado.entity';
+import { TipoPermiso } from "src/tipopermiso/entities/TipoPermiso.entity";
+import { Empleado } from "src/empleado/entities/Empleado.entity";
+import { Usuario } from "src/usuario/entities/Usuario.entity";
+import { SesionTrabajo } from "src/sesion-trabajo/entities/sesion-trabajo.entity";
 
 @Index("id_empleado", ["idEmpleado"], {})
-@Index("id_empleado_aprobacion", ["idEmpleadoAprobacion"], {})
+@Index("id_usuario_aprobacion", ["idUsuarioAprobacion"], {})
 @Index("id_tipo_permiso", ["idTipoPermiso"], {})
 @Entity("permisos", { schema: "bdrrhh" })
 export class Permiso {
@@ -23,26 +25,17 @@ export class Permiso {
   @Column("int", { name: "id_empleado" })
   idEmpleado: number;
 
-  @Column("datetime", { name: "fecha_hora_inicio" })
-  fechaHoraInicio: Date;
-
-  @Column("datetime", { name: "fecha_hora_fin" })
-  fechaHoraFin: Date;
-
   @Column("varchar", { name: "descripcion", nullable: true, length: 50 })
   descripcion: string | null;
 
-  @Column("char", { name: "a_cuenta_de_vacaciones", length: 2 })
-  aCuentaDeVacaciones: string;
+  @Column("bool", { name: "aprobado" })
+  aprobado: string;
 
-  @Column("char", { name: "goce_de_sueldo", length: 2 })
-  goceDeSueldo: string;
+  @Column("int", { name: "id_sesion_trabajo", nullable: true })
+  idSesionTrabajo: number | null;
 
-  @Column("char", { name: "aprobacion", length: 2 })
-  aprobacion: string;
-
-  @Column("int", { name: "id_empleado_aprobacion" })
-  idEmpleadoAprobacion: number;
+  @Column("int", { name: "id_usuario_aprobacion" })
+  idUsuarioAprobacion: number;
 
   @Column("char", { name: "estatus", length: 2 })
   estatus: string;
@@ -77,12 +70,19 @@ export class Permiso {
   @JoinColumn([{ name: "id_empleado", referencedColumnName: "idEmpleado" }])
   idEmpleado2: Empleado;
 
-  @ManyToOne(() => Empleado, (empleados) => empleados.permisos2, {
+  @ManyToOne(() => Usuario, (usuarios) => usuarios.permisosAprobados, {
     onDelete: "NO ACTION",
     onUpdate: "NO ACTION",
   })
   @JoinColumn([
-    { name: "id_empleado_aprobacion", referencedColumnName: "idEmpleado" },
+    { name: "id_usuario_aprobacion", referencedColumnName: "idUsuario" },
   ])
-  idEmpleadoAprobacion2: Empleado;
+  idUsuarioAprobacion2: Usuario;
+
+  @ManyToOne(() => SesionTrabajo, (sesionTrabajo) => sesionTrabajo.permisos, {
+    onDelete: "SET NULL",
+    onUpdate: "CASCADE",
+  })
+  @JoinColumn([{ name: "id_sesion_trabajo", referencedColumnName: "idSesionTrabajo" }])
+  sesionTrabajo: SesionTrabajo;
 }
