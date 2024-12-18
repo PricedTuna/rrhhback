@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import { Usuario } from 'src/usuario/entities/Usuario.entity';
 import { Asistencia } from 'src/asistencia/entities/Asistencia.entity';
+import { Permiso } from 'src/permiso/entities/Permiso.entity';
 
 @Entity('sesiones_trabajo', { schema: 'bdrrhh' })
 export class SesionTrabajo {
@@ -31,16 +32,21 @@ export class SesionTrabajo {
   })
   finalizedDate: Date;
 
-  @Index() // Crea un índice en la columna id_usuario
+  @Index()
   @Column('int', { name: 'id_usuario' })
   idUsuario: number;
 
   @ManyToOne(() => Usuario, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
-  @JoinColumn({ name: 'id_usuario' }) // Vincula esta columna como clave foránea
-  usuario?: Usuario; // Opcional: no necesitas siempre cargar el objeto completo
+  @JoinColumn({ name: 'id_usuario' })
+  usuario?: Usuario;
 
   @OneToMany(() => Asistencia, (asistencia) => asistencia.sesionTrabajo, {
-    cascade: true, // Opcional: si quieres que las asistencias se guarden/eliminar automáticamente con la sesión
+    cascade: true,
   })
   asistencias: Asistencia[];
+
+  @OneToMany(() => Permiso, (permiso) => permiso.sesionTrabajo, {
+    cascade: true,
+  })
+  permisos: Permiso[];
 }

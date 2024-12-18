@@ -200,9 +200,6 @@ export class Empleado {
   @OneToMany(() => Permiso, (permisos) => permisos.idEmpleado2)
   permisos: Permiso[];
 
-  @OneToMany(() => Permiso, (permisos) => permisos.idEmpleadoAprobacion2)
-  permisos2: Permiso[];
-
   @OneToMany(() => Usuario, (usuarios) => usuarios.idUsuarioPadre)
   usuarios: Usuario[];
 }

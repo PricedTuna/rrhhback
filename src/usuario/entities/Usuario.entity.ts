@@ -1,4 +1,5 @@
 import { Empleado } from 'src/empleado/entities/Empleado.entity';
+import { Permiso } from 'src/permiso/entities/Permiso.entity';
 import { SesionTrabajo } from 'src/sesion-trabajo/entities/sesion-trabajo.entity';
 import {
   Column,
@@ -57,4 +58,8 @@ export class Usuario {
   })
   @JoinColumn([{ name: 'id_empleado', referencedColumnName: 'idEmpleado' }])
   idEmpleado2: Empleado;
+
+  @OneToMany(() => Permiso, (permiso) => permiso.idUsuarioAprobacion2)
+  permisosAprobados: Permiso[];
+
 }

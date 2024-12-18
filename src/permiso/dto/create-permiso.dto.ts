@@ -1,44 +1,32 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNumber, IsString } from "class-validator";
+import { isNumber, IsNumber, IsString } from "class-validator";
 
 export class CreatePermisoDto {
-  @IsNumber()
   @ApiProperty()
+  @IsNumber()
   idTipoPermiso: number;
-
-  @IsNumber()
+  
   @ApiProperty()
+  @IsNumber()
   idEmpleado: number;
-
+  
+  @ApiProperty()
   @IsString()
-  @ApiProperty()
-  fechaHoraInicio: Date;
-
-  @ApiProperty()
-  fechaHoraFin: Date;
-
-  @IsString()
-  @ApiProperty()
   descripcion: string | null;
-
-  @IsString()
+  
   @ApiProperty()
-  aCuentaDeVacaciones: string;
-
   @IsString()
+  aprobado: boolean;
+  
   @ApiProperty()
-  goceDeSueldo: string;
-
-  @IsString()
-  @ApiProperty()
-  aprobacion: string;
-
   @IsNumber()
+  idSesionTrabajo: number | null;
+  
   @ApiProperty()
-  idEmpleadoAprobacion: number;
-
+  @IsNumber()
+  idUsuarioAprobacion: number;
+  
+  @ApiProperty()
   @IsString()
-  @ApiProperty()
   estatus: string;
-
 }
